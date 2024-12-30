@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Stage Events and Shows</title>
+	<style>
+    	body {
+        	font-family: Arial, sans-serif;
+        	margin: 20px;
+    	}
+    	table {
+        	width: 100%;
+        	border-collapse: collapse;
+    	}
+    	th, td {
+        	padding: 10px;
+        	border: 1px solid #ddd;
+    	}
+    	th {
+        	background-color: #f4f4f4;
+    	}
+	</style>
+</head>
+<body>
+	<h1>Stage Events and Shows</h1>
+	<table id="shows-table">
+    	<thead>
+        	<tr>
+            	<th>Show ID</th>
+            	<th>Event ID</th>
+            	<th>Start Time</th>
+            	<th>End Time</th>
+            	<th>Show Date</th>
+            	<th>Total Tickets</th>
+            	<th>Booked Tickets</th>
+        	</tr>
+    	</thead>
+    	<tbody></tbody>
+	</table>
+
+	<!-- JavaScript code to fetch and display shows data -->
+	<script>
+    	// Function to fetch shows data from backend
+    	async function fetchShowsData() {
+        	const response = await fetch('http://localhost:5001/shows');  // Update the port here if needed
+        	const shows = await response.json();
+
+        	const tableBody = document.getElementById('shows-table').querySelector('tbody');
+        	tableBody.innerHTML = ''; // Clear existing rows
+
+        	shows.forEach(show => {
+            	const row = document.createElement('tr');
+
+            	row.innerHTML = `
+                	<td>${show.show_id}</td>
+                	<td>${show.event_id}</td>
+                	<td>${show.start_time}</td>
+                	<td>${show.end_time}</td>
+                	<td>${show.show_date}</td>
+                	<td>${show.total_tickets}</td>
+                	<td>${show.booked_tickets}</td>
+            	`;
+
+            	tableBody.appendChild(row);
+        	});
+    	}
+
+    	// Call the function to fetch and display shows data
+    	fetchShowsData();
+	</script>
+</body>
+</html>
